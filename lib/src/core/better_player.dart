@@ -10,13 +10,10 @@ import 'package:better_player/src/core/better_player_with_controls.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:visibility_detector/visibility_detector.dart';
-import 'package:wakelock/wakelock.dart';
 
-import 'better_player_controller_provider.dart';
 
 ///Widget which uses provided controller to render video player.
 class BetterPlayer extends StatefulWidget {
@@ -112,7 +109,6 @@ class _BetterPlayerState extends State<BetterPlayer>
     ///full screen is on, then full screen route must be pop and return to normal
     ///state.
     if (_isFullScreen) {
-      Wakelock.disable();
       _navigatorState.maybePop();
       // SystemChrome?.setEnabledSystemUIOverlays(
       //     _betterPlayerConfiguration.systemOverlaysAfterFullScreen);
@@ -260,7 +256,6 @@ class _BetterPlayerState extends State<BetterPlayer>
     }
 
     if (!_betterPlayerConfiguration.allowedScreenSleep) {
-      Wakelock.enable();
     }
 
     await Navigator.of(context, rootNavigator: true).push(route);
@@ -269,7 +264,6 @@ class _BetterPlayerState extends State<BetterPlayer>
 
     // The wakelock plugins checks whether it needs to perform an action internally,
     // so we do not need to check Wakelock.isEnabled.
-    Wakelock.disable();
 
     // await SystemChrome.setEnabledSystemUIOverlays(
     //     _betterPlayerConfiguration.systemOverlaysAfterFullScreen);
